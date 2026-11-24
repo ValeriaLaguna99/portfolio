@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valeria Laguna | Programadora Junior</title>
+<meta name="description" content="Programadora junior. Armo interfaces con React, APIs con FastAPI y circuitos con ESP32. Estudio Análisis de Software y Programación de Sistemas.">
+<style>
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&display=swap');
+
+:root {
+  --bg-main: #EEE7DD;
+  --bg-surface: #F6F3EE;
+  --color-title: #025A4E;
+  --color-text: #5D6D68;
+  --card-peach: #EAB595;
+  --card-sky: #C3E0F5;
+  --card-sage: #CBE0D2;
+  --card-lavender: #DCD6F7;
+  --ui-dark: #222222;
+  --ui-white: #FFFFFF;
+  --ui-dot-red: #FF5F56;
+  --ui-dot-yellow: #FFBD2E;
+  --ui-dot-green: #27C93F;
+  --radius-pill: 9999px;
+  --radius-card: 28px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-main);
+  color: var(--color-text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3, .project-title {
+  font-family: 'Clash Display', system-ui, sans-serif;
+  font-weight: 700;
+  color: var(--color-title);
+  line-height: 1.1;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* NAV */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+  background: rgba(238, 231, 221, 0.85);
+  padding: 1rem 0;
+}
+.nav-pills {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  transition: background 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.pill:hover, .pill.active {
+  background: var(--bg-surface);
+  color: var(--color-title);
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 4rem 1.25rem 3rem;
+}
+.hero h1 {
+  font-size: clamp(2.75rem, 8vw, 4.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+.hero .subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+.hero .subtitle-2 {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+.hero .buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface);
+  color: var(--color-title);
+  border: 2px solid var(--color-title);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.btn:hover, .btn:focus {
+  background: #E8E0D5;
+  outline: none;
+}
+
+/* SECTIONS */
+section {
+  padding: 3rem 0;
+}
+.section-title {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* PROJECTS */
+.projects {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+.project-card {
+  width: 100%;
+  max-width: 680px;
+  border-radius: var(--radius-card);
+  padding: 2.5rem 2.5rem 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card-peach { background: var(--card-peach); }
+.card-sky { background: var(--card-sky); }
+.card-sage { background: var(--card-sage); }
+
+.card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  margin-bottom: 1.25rem;
+}
+.card-category {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+.card-top .project-title {
+  font-size: 1.85rem;
+  color: var(--color-title);
+}
+
+.card-body {
+  text-align: left;
+}
+.role {
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+}
+.role strong { color: var(--color-title); font-weight: 700; font-family: 'DM Sans', system-ui, sans-serif; }
+.desc {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+.techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.tag {
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--color-title);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+}
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.card-links a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 1.1rem;
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface);
+  color: var(--color-title);
+  border: 2px solid var(--color-title);
+  font-size: 0.85rem;
+  transition: background 0.2s ease;
+}
+.card-links a:hover { background: #E8E0D5; }
+
+.card-image {
+  width: calc(100% + 5rem);
+  margin-left: -2.5rem;
+  margin-right: -2.5rem;
+  display: block;
+  border-radius: 0;
+  margin-top: 0.5rem;
+}
+.card-image[src=""] { display: none; }
+
+/* FORMATION */
+.formation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.box {
+  background: var(--bg-surface);
+  border-radius: var(--radius-card);
+  padding: 2rem;
+}
+.box h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+.box ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.box li {
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.skill-tag {
+  background: var(--bg-main);
+  color: var(--color-title);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  border: 1px solid var(--color-title);
+}
+
+/* CONTACT */
+.contact-card {
+  background: var(--card-lavender);
+  border-radius: var(--radius-card);
+  padding: 2.5rem;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+.contact-card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+.contact-card p {
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+}
+.contact-email {
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+  font-size: 1rem;
+}
+.contact-email a {
+  color: var(--color-title);
+  text-decoration: underline;
+}
+.contact-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .formation-grid { grid-template-columns: 1fr; }
+  .hero { padding: 3rem 1rem 2rem; }
+  .project-card { padding: 2rem 1.5rem 0; }
+  .card-image { width: calc(100% + 3rem); margin-left: -1.5rem; margin-right: -1.5rem; }
+  .contact-card { padding: 2rem 1.5rem; }
+  .btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+}
+@media (max-width: 360px) {
+  .hero h1 { font-size: 2.4rem; }
+  .pill { padding: 0.4rem 0.9rem; font-size: 0.85rem; }
+  .card-top .project-title { font-size: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <div class="nav-pills">
+      <a class="pill active" href="#inicio" data-section="inicio">Inicio</a>
+      <a class="pill" href="#proyectos" data-section="proyectos">Proyectos</a>
+      <a class="pill" href="#formacion" data-section="formacion">Formación</a>
+      <a class="pill" href="#contacto" data-section="contacto">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+<section id="inicio" class="hero">
+  <h1>Valeria Laguna</h1>
+  <p class="subtitle">Programadora junior. Armo interfaces con React, APIs con FastAPI y circuitos con ESP32. Estudio Análisis de Software y Programación de Sistemas y busco mi primera experiencia en un equipo de desarrollo.</p>
+  <div class="buttons">
+    <a class="btn" href="Apellido_Valeria_CV.pdf" download>Descargar CV en PDF</a>
+    <a class="btn" href="#proyectos">Ver proyectos</a>
+  </div>
+</section>
+
+<section id="proyectos">
+  <div class="container">
+    <h2 class="section-title">Proyectos</h2>
+    <div class="projects">
+
+      <article class="project-card card-peach">
+        <div class="card-top">
+          <span class="card-category">Robótica · Nov 2026</span>
+          <h3 class="project-title">Alarma sísmica y de gas</h3>
+        </div>
+        <div class="card-body">
+          <p class="role"><strong>Rol:</strong> desarrollé el circuito y el programa completos.</p>
+          <p class="desc">Alarma educativa que detecta vibraciones y presencia de gas. Muestra el estado en una pantalla OLED, activa un buzzer con LEDs y envía avisos por Telegram.</p>
+          <div class="techs">
+            <span class="tag">ESP32</span>
+            <span class="tag">Arduino IDE</span>
+            <span class="tag">MPU-6050</span>
+            <span class="tag">MQ-5</span>
+            <span class="tag">OLED</span>
+            <span class="tag">Telegram</span>
+          </div>
+
+        </div>
+        <img class="card-image" src="alarma-sismica.jpg" alt="Prototipo de la alarma sísmica y de gas con ESP32, sensores y pantalla OLED" onerror="this.style.display='none'">
+      </article>
+
+      <article class="project-card card-sky">
+        <div class="card-top">
+          <span class="card-category">Desarrollo web · Ago–Nov 2026</span>
+          <h3 class="project-title">IES Connect</h3>
+        </div>
+        <div class="card-body">
+          <p class="role"><strong>Rol:</strong> desarrolladora frontend (equipo de 4 personas).</p>
+          <p class="desc">Aplicación web de comunicación para una institución educativa con 3 roles (administrador, tutor y alumno). Hice el diseño general y las páginas, incluida la mensajería estilo chat, y la conecté con el backend.</p>
+          <div class="techs">
+            <span class="tag">React 19</span>
+            <span class="tag">React Router DOM</span>
+            <span class="tag">CSS puro</span>
+            <span class="tag">Lucide React</span>
+            <span class="tag">Vite PWA Plugin</span>
+            <span class="tag">WebSockets</span>
+            <span class="tag">Fetch API</span>
+            <span class="tag">LocalStorage</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Cloudinary</span>
+            <span class="tag">SQLAlchemy</span>
+            <span class="tag">Git y GitHub</span>
+          </div>
+
+        </div>
+        <img class="card-image" src="ies-connect.jpg" alt="Interfaz de la aplicación web IES Connect con mensajería estilo chat" onerror="this.style.display='none'">
+      </article>
+
+      <article class="project-card card-sage">
+        <div class="card-top">
+          <span class="card-category">Redes · Nov 2026</span>
+          <h3 class="project-title">Diseño de red para un colegio</h3>
+        </div>
+        <div class="card-body">
+          <p class="role"><strong>Rol:</strong> integrante del equipo; redacté y revisé el informe técnico y preparé la presentación en clase.</p>
+          <p class="desc">Propuesta técnica de red LAN/WAN para un colegio con 2 sedes ubicadas a 2 km (Sede Central y Anexo). Incluye la red local, el enlace entre sedes, la seguridad y la administración.</p>
+          <div class="techs">
+            <span class="tag">Redes LAN/WAN</span>
+            <span class="tag">Cableado estructurado</span>
+            <span class="tag">Seguridad de red</span>
+          </div>
+
+        </div>
+        <img class="card-image" src="red-colegio.jpg" alt="Diagrama de la red LAN/WAN propuesta para el colegio con dos sedes" onerror="this.style.display='none'">
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="formacion">
+  <div class="container">
+    <h2 class="section-title">Formación y habilidades</h2>
+    <div class="formation-grid">
+      <div class="box">
+        <h3>Formación</h3>
+        <ul>
+          <li>Tecnicatura en Análisis de Software y Programación de Sistemas — Instituto de Educación Superior N° 6.001 "Gral. Manuel Belgrano" (en curso)</li>
+          <li>Certificado de Robótica por participar con un proyecto de alarma sísmica</li>
+          <li>Curso de Python (2021)</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Habilidades</h3>
+        <div class="skills">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">C++ (Arduino)</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">API REST</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">Redes LAN/WAN</span>
+          <span class="skill-tag">ESP32</span>
+          <span class="skill-tag">Trabajo en equipo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="container">
+    <div class="contact-card">
+      <h3>Contacto</h3>
+      <p>¿Te interesa mi perfil? Escribime y hablemos.</p>
+      <p class="contact-email">email: <a href="mailto:valerialaguna0@gmail.com">valerialaguna0@gmail.com</a></p>
+      <div class="contact-buttons">
+        <a class="btn" href="https://www.linkedin.com/in/valeria-laguna-5193282ab" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/ValeriaLaguna99" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="Apellido_Valeria_CV.pdf" download>Descargar CV en PDF</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Valeria Laguna · Programadora Junior</p>
+</footer>
+
+<script>
+(function() {
+  const pills = document.querySelectorAll('.pill');
+  const sections = document.querySelectorAll('section[id]');
+
+  function setActive(id) {
+    pills.forEach(p => {
+      p.classList.toggle('active', p.getAttribute('href') === '#' + id);
+    });
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+
+  pills.forEach(p => {
+    p.addEventListener('click', () => {
+      const id = p.getAttribute('href').slice(1);
+      setActive(id);
+    });
+  });
+})();
+</script>
+</body>
+</html>
